@@ -36,4 +36,9 @@ Route::group(['prefix' => 'dashboard'], function () {
 // Routes for Admin
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'Admin\HomeController@index');
+
+    // User Routes
+    Route::resource('user', 'Admin\UserController');
+    Route::get('user/{id}/profile', 'Admin\UserController@profile');
+    Route::put('user/{id}/profile', 'Admin\UserController@update_profile');
 });

@@ -95,25 +95,26 @@
                         <li class="dropdown account-dropdown">
                             <a href="#" class="account-link" role="button" id="accountClick"
                                 data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="images/profile-imgs/img-13.jpg" alt="">
+                                <img src="{{'/storage/avatars/'.Auth::user()->avatar}}" alt="">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
                                 aria-labelledby="accountClick">
                                 <li>
                                     <div class="dropdown-account-header">
                                         <div class="account-holder-avatar">
-                                            <img src="images/profile-imgs/img-13.jpg" alt="">
+                                            <img src="{{'/storage/avatars/'.Auth::user()->avatar}}" alt="">
                                         </div>
-                                        <h5>John Doe</h5>
-                                        <p><a href="https://www.gambolthemes.net/cdn-cgi/l/email-protection"
+                                        <h5>{{Auth::user()->first_name}}</h5>
+                                        <p><a href="javascript::void(0)"
                                                 class="__cf_email__"
-                                                data-cfemail="640e0b0c0a000b0124011c05091408014a070b09">[email&#160;protected]</a>
+                                                data-cfemail="640e0b0c0a000b0124011c05091408014a070b09">{{Auth::user()->email}}</a>
                                         </p>
                                     </div>
                                 </li>
                                 <li class="profile-link">
-                                    <a href="my_organisation_dashboard.html" class="link-item">My Organisation</a>
-                                    <a href="organiser_profile_view.html" class="link-item">Mon Profil</a>
+                                    <a href="{{url('/admin')}}" class="link-item">Administration</a>
+                                    <a href="{{ url('admin/user/'.Auth::user()->id.'/profile') }}" class="link-item">Modifier Profil</a>
+                                    <a href="{{ url('/') }}" class="link-item">Site Web</a>
                                     <a href="{{ route('logout') }}" class="link-item" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Déconnexion</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

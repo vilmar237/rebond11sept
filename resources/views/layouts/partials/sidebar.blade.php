@@ -3,7 +3,7 @@
         <div class="left_section">
             <ul>
                 <li class="menu--item">
-                    <a href="my_organisation_dashboard.html" class="menu--link active" title="Dashboard"
+                    <a href="{{URL::to('/admin')}}" class="menu--link active" title="Dashboard"
                         data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-gauge menu--icon"></i>
                         <span class="menu--label">Dashboard</span>

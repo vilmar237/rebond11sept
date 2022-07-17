@@ -19,7 +19,7 @@
         rel="stylesheet">
     <link href='{{ url()->asset('assets/vendor/unicons-2.0.1/css/unicons.css')}}' rel='stylesheet'>
     <link href="{{ url()->asset('assets/css/style.css')}}" rel="stylesheet">
-    @if(request()->is('admin'))
+    @if(\Request::is('admin/*'))
     <link href="{{ url()->asset('assets/css/vertical-responsive-menu.min.css')}}" rel="stylesheet">
     <link href="{{ url()->asset('assets/css/analytics.css')}}" rel="stylesheet">
     @endif
@@ -33,7 +33,7 @@
     <link href="{{ url()->asset('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
     <link href="{{ url()->asset('assets/css/customs.css')}}" rel="stylesheet">
     
-    @if(request()->is('admin'))
+    @if(\Request::is('admin/*'))
     <link href="{{ url()->asset('assets/vendor/chartist/dist/chartist.min.css')}}" rel="stylesheet">
     <link href="{{ url()->asset('assets/vendor/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">
     @endif
@@ -55,7 +55,7 @@
 
     
     <script data-cfasync="false" src="{{ url()->asset('assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')}}"></script>
-    @if(request()->is('admin'))
+    @if(\Request::is('admin/*'))
     <script src="{{ url()->asset('assets/js/vertical-responsive-menu.min.js')}}"></script>
     @endif
     <script src="{{ url()->asset('assets/js/jquery-3.6.0.min.js')}}"></script>
@@ -63,7 +63,7 @@
     <script src="{{ url()->asset('assets/vendor/OwlCarousel/owl.carousel.js')}}"></script>
     <script src="{{ url()->asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
     
-    @if(request()->is('admin'))
+    @if(\Request::is('admin/*'))
     <script src="{{ url()->asset('assets/vendor/chartist/dist/chartist.min.js')}}"></script>
     <script src="{{ url()->asset('assets/vendor/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js')}}"></script>
     <script src="{{ url()->asset('assets/js/analytics.js')}}"></script>
