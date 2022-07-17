@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\UserReservationEmail;
 use App\Models\StadiumBooking;
 use Illuminate\Http\Request;
 use App\Models\Stadium;
 use Carbon\Carbon;
+use Mail;
 
 class BookingStadiumController extends FrontController
 {
@@ -157,11 +159,7 @@ class BookingStadiumController extends FrontController
         }
 
 
-        //$this->saveBooking($datas['bookings']);
         return view('booking_confirmation', compact('datas', 'no_of_hours'));
-        //$stadium_booking->save();
-
-        //dd($datas['bookings']);
     }
 
     public function saveBooking(Request $request)
@@ -170,9 +168,41 @@ class BookingStadiumController extends FrontController
         {
             $stadium = $request->session()->get('datas');
             $stadium->save();
-            //TODO:: Envoyer le mail
+
+            $name = Auth::user()->first_name;
+            $email = Auth::user()->email;
+            
+            $this->sendDetailsEmail($name, $email, $stadium->date, $stadium->start, $stadium->end, $stadium->reason,$stadium->stadium_cost);
+            
             notify()->success('Réservation effectuée. ', 'Réservation');
             return redirect('/booking-stadium')->with('success', 'Un mail vous a été envoyé avec les détails de réservaion.');
+        }
+    }
+
+    /**
+     * @param  string  $name
+     * @param  string  $email
+     * @param  string  $activateCode
+     * @param  string  $url
+     *
+     * @throws Exception
+     */
+    public function sendDetailsEmail($name, $email, $date, $start, $end, $reason, $stadium_cost)
+    {
+        $data['date'] = $date;
+        $data['start'] = $start;
+        $data['end'] = $end;
+        $data['reason'] = $reason;
+        $data['stadium_cost'] = $stadium_cost;
+        $data['name'] = $name;
+        $data['email'] = $email;
+
+        try {
+            Mail::to($email)
+                ->send(new UserReservationEmail('users.send-user-reservation-notification', 'Informations de réservation', $data));
+
+        } catch (Exception $e) {
+            throw new Exception($e);
         }
     }
 

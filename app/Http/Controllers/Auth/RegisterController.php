@@ -135,7 +135,7 @@ class RegisterController extends Controller
 
         try {
             Mail::to($email)
-                ->send(new UserRegisterEmail('users.send-user-register-notification', 'Activate your account', $data));
+                ->send(new UserRegisterEmail('users.send-user-register-notification', 'Activez votre compte', $data));
 
         } catch (Exception $e) {
             throw new Exception($e);
