@@ -1,0 +1,18 @@
+.app-top-right-link
+{
+    margin-top: 50px;
+}
+
+.inset-0 {
+    z-index: 9999;
+    margin-left: 950px;
+    margin-top: 65px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .inset-0 {
+        z-index: 9999;
+    }
+  }
+
+  

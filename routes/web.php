@@ -12,7 +12,27 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Authentication Routes
+Auth::routes();
+Route::post('/postLogin', 'Auth\LoginController@postLogin')->name('postlogin');
+Route::get('activate', 'AuthController@verifyAccount');
 
-Route::get('/', function () {
-    return view('welcome');
+// Routes for Front
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/booking-stadium', 'Front\BookingStadiumController@show');
+Route::post('/booking-stadium/book', 'Front\BookingStadiumController@book');
+
+
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+// Routes for Dashboard
+Route::group(['prefix' => 'dashboard'], function () {
+    Route::get('/', 'Dashboard\HomeController@index');
+
+});
+
+// Routes for Admin
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+    Route::get('/', 'Admin\HomeController@index');
 });

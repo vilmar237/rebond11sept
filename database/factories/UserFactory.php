@@ -3,10 +3,19 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class UserFactory extends Factory
 {
+     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
+
     /**
      * Define the model's default state.
      *
@@ -14,12 +23,21 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $roles = array(
+            'Admin',
+            'Customer',
+        );
+
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'first_name' => $this->faker->name,
+            'last_name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'role' => $roles[array_rand($roles)],
+            'password' => Hash::make('admin'), // password
             'remember_token' => Str::random(10),
+            'random_key' => Str::random(60),
+            // 'avatar' => $this->faker->image('public/img/user/testing/',640,480, null, false),
         ];
     }
 
@@ -33,6 +51,15 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'email_verified_at' => null,
+            ];
+        });
+    }
+
+    public function isCustomer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'Customer',
             ];
         });
     }
