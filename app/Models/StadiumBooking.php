@@ -21,7 +21,7 @@ class StadiumBooking extends Model
         'end' => 'date:hh:mm'
     ];
 
-    protected $fillable = ['date', 'start', 'end', 'stadium_cost', 'status', 'payment', 'stadium_id', 'user_id'];
+    protected $fillable = ['date', 'start', 'end', 'stadium_cost', 'reason', 'status', 'payment', 'stadium_id', 'user_id'];
 
     /**
      * Get the gallery that owns the image.

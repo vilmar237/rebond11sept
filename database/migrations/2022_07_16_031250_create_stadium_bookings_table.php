@@ -20,6 +20,7 @@ class CreateStadiumBookingsTable extends Migration
             $table->date('date');
             $table->time("start")->nullable();
             $table->time("end")->nullable();
+            $table->string("reason")->nullable();
             $table->integer('stadium_cost');
             $table->enum('status', ['pending', 'checked_in', 'checked_out', 'cancelled'])->default('pending');
             $table->boolean('payment')->default(false);

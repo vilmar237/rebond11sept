@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // On défini le "français" comme langue globale de l'application
+        \App::setLocale('fr');
     }
 }

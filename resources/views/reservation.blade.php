@@ -57,11 +57,11 @@
                                                             <p class="mt-2 d-block fs-14 mb-3">Choisir le motif de votre réservation. <a href="#" class="a-link">En savoir plus.</a></p>
                                                             <select id="reason" required name="reason" class="selectpicker" data-size="5"
                                                                 title="Choisir un motif" data-live-search="true">
-                                                                <option value="1">Tennis</option>
-                                                                <option value="2">Football</option>
-                                                                <option value="3">Basket</option>
-                                                                <option value="4">Voley</option>
-                                                                <option value="5">Handball</option>
+                                                                <option value="Tennis">Tennis</option>
+                                                                <option value="Football">Football</option>
+                                                                <option value="Basket">Basket</option>
+                                                                <option value="Voley">Voley</option>
+                                                                <option value="Handball">Handball</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group border_bottom pt_30 pb_30">
