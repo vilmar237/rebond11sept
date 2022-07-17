@@ -114,6 +114,7 @@
                                 <li class="profile-link">
                                     <a href="{{url('/admin')}}" class="link-item">Administration</a>
                                     <a href="{{ url('admin/user/'.Auth::user()->id.'/profile') }}" class="link-item">Modifier Profil</a>
+                                    <a href="{{ url('admin/user/'.Auth::user()->id.'/setting') }}" class="link-item">Changer Mot de Passe</a>
                                     <a href="{{ url('/') }}" class="link-item">Site Web</a>
                                     <a href="{{ route('logout') }}" class="link-item" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Déconnexion</a>

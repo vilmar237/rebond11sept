@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Hash;
+use Auth;
 
 class UserController extends Controller
 {
@@ -159,6 +161,61 @@ class UserController extends Controller
             $user->save();
             notify()->success('Le profil utilisateur a été mis à jour. ', 'Profil');
             return redirect()->back()->with('success','Le profil utilisateur a été mis à jour');
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function setting($id)
+    {
+        return view('admin.user.setting');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update_setting(Request $request, $id)
+    {
+        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+            // The passwords matches
+            notify()->error('Votre mot de passe actuel ne correspond pas au mot de passe. ', 'Mot de passe');
+            return redirect()->back()->with("error","Votre mot de passe actuel ne correspond pas au mot de passe.");
+        }
+
+        if(strcmp($request->get('current_password'), $request->get('password')) == 0){
+            // Current password and new password same
+            notify()->error('Le nouveau mot de passe ne peut pas être le même que votre mot de passe actuel. ', 'Mot de passe');
+            return redirect()->back()->with("error","Le nouveau mot de passe ne peut pas être le même que votre mot de passe actuel.");
+        }
+
+        $user = User::find($id);
+        $rules = [
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|same:password'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->with('user', $user);
+        } else {
+            $user = User::find($id);
+            $user->password = bcrypt($request->input('password'));
+
+            $user->save();
+
+            notify()->success('Mot de passe changé avec succès! ', 'Mot de passe');
+            return redirect()->back()->with("success","Mot de passe changé avec succès!");
+            return redirect('/admin');
         }
     }
 }

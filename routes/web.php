@@ -41,4 +41,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::resource('user', 'Admin\UserController');
     Route::get('user/{id}/profile', 'Admin\UserController@profile');
     Route::put('user/{id}/profile', 'Admin\UserController@update_profile');
+    Route::get('user/{id}/setting', 'Admin\UserController@setting');
+    Route::put('user/{id}/setting', 'Admin\UserController@update_setting');
 });
