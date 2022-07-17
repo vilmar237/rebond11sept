@@ -28,7 +28,7 @@ class BookingStadiumController extends FrontController
 
         $rules = [
             'name' => 'required|string|min:3',
-            'reason' => 'required||in:1,2,3,4,5',
+            'reason' => 'required||in:Tennis,Football,Basket,Voley,Handball',
             'date' => 'required|date_format:Y/m/d|after_or_equal:today',
             'start' => 'required|date_format:H:i',
             'end' => 'required|date_format:H:i|after:'.$request->input('start'),
@@ -151,11 +151,29 @@ class BookingStadiumController extends FrontController
         $stadium_booking->stadium_id = $sn;
 
         $datas['bookings'] = $stadium_booking;
-        //dd($datas['bookings']);
+
+        if(empty($request->session()->get('datas'))){
+            $request->session()->put('datas', $datas['bookings']);
+        }
+
+
+        //$this->saveBooking($datas['bookings']);
         return view('booking_confirmation', compact('datas', 'no_of_hours'));
         //$stadium_booking->save();
 
         //dd($datas['bookings']);
+    }
+
+    public function saveBooking(Request $request)
+    {   
+        if(!empty($request->booked))
+        {
+            $stadium = $request->session()->get('datas');
+            $stadium->save();
+            //TODO:: Envoyer le mail
+            notify()->success('Réservation effectuée. ', 'Réservation');
+            return redirect('/booking-stadium')->with('success', 'Un mail vous a été envoyé avec les détails de réservaion.');
+        }
     }
 
     //S'il y a au moins un stade dans la BD renvoyer true

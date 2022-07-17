@@ -25,12 +25,13 @@
                             </div>
                             <div class="booking-confirmed-bottom">
                                 <div class="booking-confirmed-bottom-bg p_30">
-                                    <form action="" method="POST">
+                                    <form action="/booking-stadium/booked" method="post" >
+                                    {{ csrf_field() }}
                                         <div class="event-order-dt">
                                             <div class="event-thumbnail-img">
                                                 <img src="{{ url()->asset('assets/images/logo-rebond_130x70.jpg')}}" alt="">
                                             </div>
-                                            
+                                            <input type="hidden" name="booked" value="booked">
                                             <div class="event-order-dt-content">
                                                 <h5>Réservation du stade Rebond pour</h5>
                                                 <span> {{Carbon\Carbon::parse($datas['bookings']['date'])->isoFormat('LLLL')}}. De {{Carbon\Carbon::parse($datas['bookings']['start'])->hour}}h à {{Carbon\Carbon::parse($datas['bookings']['end'])->hour}}h  Durée {{$no_of_hours}}h</span>
@@ -45,9 +46,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="invoice.html" class="main-btn btn-hover h_50 w-100 mt-5"><i
-                                                class="fa-solid fa-ticket rotate-icon me-3"></i>Confirmer ma réservation</a>
-                                    </form>
+                                        <button type="submit" class="main-btn btn-hover h_50 w-100 mt-5"><i
+                                                class="fa-solid fa-ticket rotate-icon me-3"></i>Confirmer ma réservation</button>
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>

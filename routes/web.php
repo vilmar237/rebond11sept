@@ -22,6 +22,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/booking-stadium', 'Front\BookingStadiumController@show');
 Route::post('/booking-stadium/book', 'Front\BookingStadiumController@book');
+Route::post('/booking-stadium/booked', 'Front\BookingStadiumController@saveBooking');
 
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

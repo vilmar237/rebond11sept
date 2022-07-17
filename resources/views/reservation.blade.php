@@ -31,6 +31,14 @@
                                     </div>
                                 </div>
                             @endif
+                            @if(Session::has('success'))
+                                <div class="alert alert-success">
+                                    {{ Session::get('success') }}
+                                    @php
+                                        Session::forget('success');
+                                    @endphp
+                                </div>
+                            @endif
                             <div class="step-content">
                                 <div class="step-tab-panel step-tab-info active" id="tab_step1">
                                     <div class="tab-from-content">
