@@ -10,66 +10,10 @@
                     </a>
                 </li>
                 <li class="menu--item">
-                    <a href="my_organisation_dashboard_events.html" class="menu--link" title="Events"
-                        data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fa-solid fa-calendar-days menu--icon"></i>
-                        <span class="menu--label">Events</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="my_organisation_dashboard_promotion.html" class="menu--link" title="Promotion"
-                        data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fa-solid fa-rectangle-ad menu--icon"></i>
-                        <span class="menu--label">Promotion</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="my_organisation_dashboard_contact_lists.html" class="menu--link" title="Contact List"
-                        data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fa-regular fa-address-card menu--icon"></i>
-                        <span class="menu--label">Contact List</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="my_organisation_dashboard_payout.html" class="menu--link" title="Payouts"
-                        data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fa-solid fa-credit-card menu--icon"></i>
-                        <span class="menu--label">Payouts</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="my_organisation_dashboard_reports.html" class="menu--link" title="Reports"
-                        data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fa-solid fa-chart-pie menu--icon"></i>
-                        <span class="menu--label">Reports</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="my_organisation_dashboard_subscription.html" class="menu--link" title="Subscription"
-                        data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fa-solid fa-bahai menu--icon"></i>
-                        <span class="menu--label">Subscription</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="my_organisation_dashboard_conversion_setup.html" class="menu--link"
-                        title="Conversion Setup" data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fa-solid fa-square-plus menu--icon"></i>
-                        <span class="menu--label">Conversion Setup</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="my_organisation_dashboard_about.html" class="menu--link" title="About"
-                        data-bs-toggle="tooltip" data-bs-placement="right">
-                        <i class="fa-solid fa-circle-info menu--icon"></i>
-                        <span class="menu--label">About</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="{{url('admin/user')}}" class="menu--link team-lock" title="Mon Equipe"
+                    <a href="{{url('admin/user')}}" class="menu--link team-lock" title="Utilisateurs"
                         data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-user-group menu--icon"></i>
-                        <span class="menu--label">Mon Equipe</span>
+                        <span class="menu--label">Utilisateurs</span>
                     </a>
                 </li>
             </ul>

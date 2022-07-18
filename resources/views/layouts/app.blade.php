@@ -54,11 +54,12 @@
     @include('layouts.partials.footer')
 
     
-    <script data-cfasync="false" src="{{ url()->asset('assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')}}"></script>
-    @if(\Request::is('admin/*'))
     <script src="{{ url()->asset('assets/js/vertical-responsive-menu.min.js')}}"></script>
-    @endif
+    
     <script src="{{ url()->asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    
+    
     <script src="{{ url()->asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ url()->asset('assets/vendor/OwlCarousel/owl.carousel.js')}}"></script>
     <script src="{{ url()->asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
@@ -66,21 +67,11 @@
     @if(\Request::is('admin/*'))
     <script src="{{ url()->asset('assets/vendor/chartist/dist/chartist.min.js')}}"></script>
     <script src="{{ url()->asset('assets/vendor/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js')}}"></script>
-    <script src="{{ url()->asset('assets/js/analytics.js')}}"></script>
     @endif
 
     
     <script src="{{ url()->asset('assets/js/custom.js')}}"></script>
     <script src="{{ url()->asset('assets/js/night-mode.js')}}"></script>
-    <script>
-        var containerEl = document.querySelector('[data-ref~="event-filter-content"]');
-
-        var mixer = mixitup(containerEl, {
-            selectors: {
-                target: '[data-ref~="mixitup-target"]'
-            }
-        });
-    </script>
     <script src="{{ url()->asset('assets/js/customs.js')}}"></script>
 
     @stack('scripts')

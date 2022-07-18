@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title',__('Utilisateurs | Rebond'))
+@push('styles')
+
+@endpush
 @section('content')
 @include('layouts.partials.sidebar')
 <div class="wrapper wrapper-body">
@@ -36,7 +39,7 @@
                                 <div class="table-card mt-4">
                                     <div class="main-table">
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table id="bootstrap-table" class="table">
                                                 <thead class="thead-dark">
                                                     <tr>
                                                         <th scope="col">Nom</th>
@@ -359,3 +362,27 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<!-- Sweet Alert 2 plugin -->
+<script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
+
+
+<script type="text/javascript">
+
+    var delete_button = function(){
+        swal({  title: "Êtes-vous certain ?",
+            text: "Après avoir supprimé l'utilisateur, toutes les réservations de stades de l'utilisateur seront également supprimées.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn btn-info btn-fill",
+            confirmButtonText: "Oui, supprimer!",
+            cancelButtonClass: "btn btn-danger btn-fill",
+            closeOnConfirm: false,
+        },function(){
+            $('form#delete-user').submit();
+        });
+    }
+
+
+</script>
+@endpush

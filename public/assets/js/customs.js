@@ -1,5 +1,6 @@
 //DATE PICKER	
 $(function() {
+    //var $ = jQuery.noConflict();
     var from_min_date = new Date();
     var dateFormat = "yyyy/mm/dd",
     from = $("#from")
