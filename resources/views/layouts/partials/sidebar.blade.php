@@ -66,10 +66,10 @@
                     </a>
                 </li>
                 <li class="menu--item">
-                    <a href="my_organisation_dashboard_my_team.html" class="menu--link team-lock" title="My Team"
+                    <a href="{{url('admin/user')}}" class="menu--link team-lock" title="Mon Equipe"
                         data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-user-group menu--icon"></i>
-                        <span class="menu--label">My Team</span>
+                        <span class="menu--label">Mon Equipe</span>
                     </a>
                 </li>
             </ul>

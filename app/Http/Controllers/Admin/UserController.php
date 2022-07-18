@@ -19,7 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('admin.user.view')->with('users', $users);
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_admin')
 @section('title',__('Administration | Rebond'))
 @section('content')
 @include('layouts.partials.sidebar')
