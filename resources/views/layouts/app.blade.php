@@ -38,6 +38,8 @@
     <link href="{{ url()->asset('assets/vendor/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">
     @endif
 
+    <link rel="stylesheet" type="text/css" href="{{ url()->asset('assets/css/datatables.min.css')}}"/>
+
     @stack('styles')
 
     @notifyCss
@@ -73,6 +75,8 @@
     <script src="{{ url()->asset('assets/js/custom.js')}}"></script>
     <script src="{{ url()->asset('assets/js/night-mode.js')}}"></script>
     <script src="{{ url()->asset('assets/js/customs.js')}}"></script>
+
+    <script type="text/javascript" src="{{ url()->asset('assets/js/datatables.min.js')}}"></script>
 
     @stack('scripts')
 

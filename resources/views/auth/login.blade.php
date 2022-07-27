@@ -32,61 +32,71 @@
                     </div>
                     <div class="col-xl-5 col-lg-6 col-md-7">
                         <div class="registration">
-                            <form onsubmit="return disableButton()" action="/postLogin" method="POST">
+                            <form id="login-form" action="/postLogin" method="POST">
                             @csrf
-                                <h2 class="registration-title">Connectez-vous à Rebond</h2>
-                                <br>
-                                @if(Session::has('success'))
-                                    <div class="alert alert-success">
-                                        {{ Session::get('success') }}
-                                        @php
-                                            Session::forget('success');
-                                        @endphp
-                                    </div>
-                                @endif
-                                @if(Session::has('error'))
-                                    <div class="alert alert-danger">
-                                        {{ Session::get('error') }}
-                                        @php
-                                            Session::forget('error');
-                                        @endphp
-                                    </div>
-                                @endif
-                                <div class="form-group mt-5">
-                                    <label class="form-label">Votre mail*</label>
-                                    <input class="form-control h_50" name="email" type="email" placeholder="Entrer votre mail"
-                                    value="{{ old('email') }}" required autofocus>
-                                    @if ($errors->has('email'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                <div class="login_box">
+
+                                
+                                    <h2 class="registration-title">Connectez-vous à Rebond</h2>
+                                    <br>
+                                    @if(Session::has('success'))
+                                        <div class="alert alert-success">
+                                            {{ Session::get('success') }}
+                                            @php
+                                                Session::forget('success');
+                                            @endphp
+                                        </div>
                                     @endif
-                                </div>
-                                <div class="form-group mt-4">
-                                    <div class="field-password">
-                                        <label class="form-label">Mot de passe*</label>
-                                        <a class="forgot-pass-link" href="#">Mot de passe oublié ?</a>
-                                    </div>
-                                    <div class="loc-group position-relative">
-                                        <input class="form-control h_50" name="password" type="password"
-                                            placeholder="Entrer votre mot de passe">
-                                        <span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span>
-                                        @if ($errors->has('password'))
+                                    @if(Session::has('error'))
+                                        <div class="alert alert-danger">
+                                            {{ Session::get('error') }}
+                                            @php
+                                                Session::forget('error');
+                                            @endphp
+                                        </div>
+                                    @endif
+                                    <div class="form-group mt-5">
+                                        <label class="form-label">Votre mail*</label>
+                                        <input class="form-control h_50" name="email" type="email" placeholder="Entrer votre mail"
+                                        value="{{ old('email') }}" required autofocus>
+                                        @if ($errors->has('email'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
+                                                <strong>{{ $errors->first('email') }}</strong>
                                             </span>
                                         @endif
                                     </div>
+                                    <div class="form-group mt-4">
+                                        <div class="field-password">
+                                            <label class="form-label">Mot de passe*</label>
+                                            <a class="forgot-pass-link" href="#">Mot de passe oublié ?</a>
+                                        </div>
+                                        <div class="loc-group position-relative">
+                                            <input class="form-control h_50" name="password" type="password"
+                                                placeholder="Entrer votre mot de passe">
+                                            <span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span>
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-4">
+                                        <div class="form-group text-left">
+                                            <input id="checkbox-signup" type="checkbox" name="remember">
+                                            <label for="checkbox-signup">Rester connecté</label>
+                                        </div>
+                                    </div>
+                                    <button id="btn_submit" class="main-btn btn-hover w-100 mt-4" type="submit">
+                                        <div id="loading_submit" class="spinner-border hide" role="status"
+                                            style="width: 15px; height: 15px">
+                                        </div>
+                                        <div id="text_submit">
+                                            Connexion
+                                        </div>
+                                        <i class="fas fa-sign-in-alt ms-2"></i>
+                                    </button>
                                 </div>
-                                <button id="btn_submit" class="main-btn btn-hover w-100 mt-4" type="submit">
-                                    <div id="loading_submit" class="spinner-border hide" role="status"
-                                        style="width: 15px; height: 15px">
-                                    </div>
-                                    <div id="text_submit">
-                                        Connexion
-                                    </div>
-                                    <i class="fas fa-sign-in-alt ms-2"></i>
-                                </button>
                             </form>
                             <div class="new-sign-link">
                                 Nouveau sur Rebond ?<a class="signup-link" href="/register">S'inscrire</a>
@@ -101,10 +111,42 @@
 @endsection
 @push('scripts')
 <script>
-    function disableButton() {
-        $("#loading_submit").removeClass("hide");
-        $("#text_submit").addClass("hide");
-        $("#btn_submit").addClass("isLoading").attr('disabled', 'disabled');
-    }
+    $(document).ready(function () {
+        $('#btn_submit').click(function () {
+            $("#loading_submit").removeClass("hide");
+            $("#text_submit").addClass("hide");
+            $("#btn_submit").addClass("isLoading").attr('disabled', 'disabled');
+
+            $('#login-form').submit();
+            /*const url = "{{ url('/postLogin') }}";
+            $.ajax({
+                url: url,
+                container: '.login_box',
+                disableButton: true,
+                buttonSelector: "#btn_submit",
+                type: "POST",
+                blockUI: true,
+                data: $('#login-form').serialize(),
+                success: function (response) {
+                    window.location.href = "{{ session()->has('url.intended') ? session()->get('url.intended') : url('login') }}";
+                }
+            })*/
+        });
+
+        @if (session('error'))
+        Swal.fire({
+            icon: 'error',
+            text: '{{ session('error') }}',
+            showConfirmButton: true,
+            customClass: {
+                confirmButton: 'btn btn-primary',
+            },
+            showClass: {
+                popup: 'swal2-noanimation',
+                backdrop: 'swal2-noanimation'
+            },
+        })
+        @endif
+    });
 </script>
 @endpush

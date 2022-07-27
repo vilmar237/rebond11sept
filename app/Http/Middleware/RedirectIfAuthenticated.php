@@ -22,6 +22,10 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check() && (Auth::user()->role == 'Admin' || Auth::user()->role == 'Super')) {
             return redirect('/admin');
         }
+        elseif(Auth::guard($guard)->check())
+        {
+            return redirect('/dashboard');
+        }
 
         return $next($request);
     }

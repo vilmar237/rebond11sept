@@ -33,7 +33,12 @@ class LoginController extends Controller
         if(Auth::user()->role == 'Admin' || Auth::user()->role == 'Super'){
             return '/admin';
         }
-        return '/dashboard';
+        elseif(Auth::user()->role == 'Customer')
+        {
+            return '/dashboard';
+        }
+        return '/';
+        
     }
 
     public function postLogin(PostLoginRequest $request)

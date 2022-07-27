@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\DataTables\UsersDataTable;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Hash;
@@ -17,17 +18,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
         $users = User::all();
-        return view('admin.user.view')->with('users', $users);
+        //return view('admin.user.view')->with('users', $users);
+
+        return $dataTable->render('admin.user.view')->with('users', $users);
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
-     */
+    */
     public function create()
     {
         //

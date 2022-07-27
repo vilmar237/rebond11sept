@@ -28,7 +28,7 @@ Route::post('/booking-stadium/booked', 'Front\BookingStadiumController@saveBooki
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 // Routes for Dashboard
-Route::group(['prefix' => 'dashboard'], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::get('/', 'Dashboard\HomeController@index');
 
 });
