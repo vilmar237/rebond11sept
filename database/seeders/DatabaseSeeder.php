@@ -16,10 +16,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            CurrencySeeder::class,
+            OrganisationSettingsTableSeeder::class,
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             UserSeeder::class,
-            SettingsSeeder::class,
+            //SettingsSeeder::class,
             StadiumTableSeeder::class,
             StadiumBookingsTableSeeder::class
         ]);

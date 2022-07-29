@@ -11,6 +11,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .sourceMaps();
+mix.js('resources/js/bootstrap.js', 'public/js')
+.scripts([
+    'public/js/bootstrap.js',
+    'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
+    'node_modules/bootstrap-select/js/bootstrap-select.js',
+    'resources/js/main.js',
+    'resources/js/custom.js'
+], 'public/js/main.js')
+    .sass('resources/sass/main.scss', 'public/css')
+    .options({processCssUrls: false})
+    .sourceMaps(true, 'source-map')

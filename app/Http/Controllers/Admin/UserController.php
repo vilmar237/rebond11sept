@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\DataTables\UsersDataTable;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use App\Helper\Reply;
 use App\Models\User;
 use Hash;
 use Auth;
@@ -20,10 +22,11 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $dataTable)
     {
-        $users = User::all();
+        //$roles = Role::where('name', '<>', 'Customer')->get();
+        //dd($roles->pluck('name')->toArray());
+        //$users = User::all();
         //return view('admin.user.view')->with('users', $users);
-
-        return $dataTable->render('admin.user.view')->with('users', $users);
+        return $dataTable->render('admin.user.view');
     }
 
     /**
@@ -33,7 +36,19 @@ class UserController extends Controller
     */
     public function create()
     {
-        //
+        $this->pageTitle = __('app.add') . ' ' . __('app.employee');
+        abort_if(!auth()->user()->permission('users.create'),403, __('Vous n\'avez pas de droit d\'accéder à cette page.'));
+
+        $this->roles = Role::all()->pluck('name')->toArray();
+
+        if (request()->ajax()) {
+            $html = view('admin.user.ajax.create', $this->data)->render();
+            return Reply::dataOnly(['status' => 'success', 'html' => $html, 'title' => $this->pageTitle]);
+        }
+
+        $this->view = 'admin.user.ajax.create';
+
+        return view('admin.user.create', $this->data);
     }
 
     /**

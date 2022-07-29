@@ -16,7 +16,7 @@ class CreateStadiumBookingsTable extends Migration
         Schema::create('stadium_bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('stadium_id')->unsigned()->index();
-            $table->unsignedBigInteger('user_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->index();
             $table->date('date');
             $table->time("start")->nullable();
             $table->time("end")->nullable();

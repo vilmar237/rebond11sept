@@ -1,7 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.app_admin')
 @section('title',__('Utilisateurs | Rebond'))
 @push('styles')
+<link rel="stylesheet" href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('vendor/datatables/buttons.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/datatables/buttons.bootstrap4.min.css') }}">
 @endpush
 @section('content')
 @include('layouts.partials.sidebar')
@@ -14,11 +17,11 @@
                         <h3><i class="fa-solid fa-user-group me-3"></i>Liste Utilisateurs</h3>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" id="reset-filters">
                     <div class="conversion-setup">
                         <div class="main-card mt-5">
                             <div class="dashboard-wrap-content p-4">
-                                <div class="d-md-flex flex-wrap align-items-center">
+                                <div id="table-actions" class="d-md-flex flex-wrap align-items-center">
                                     <div class="nav custom2-tabs btn-group" role="tablist">
                                         <button class="tab-link ms-0 active" data-bs-toggle="tab"
                                             data-bs-target="#overview-tab" type="button" role="tab"
@@ -28,9 +31,8 @@
                                             aria-selected="false">Rôles</button>
                                     </div>
                                     <div class="rs ms-auto mt_r4">
-                                        <button class="main-btn btn-hover h_40 w-100" data-bs-toggle="modal"
-                                            data-bs-target="#inviteTeamModal">Inviter un membre</button>
-                                    </div>
+                                        <a class="main-btn btn-hover h_40 w-100" href="{{route('user.create')}}" >Ajouter un membre</a>
+                                    </div>&nbsp;
                                 </div>
                             </div>
                         </div>
@@ -38,7 +40,8 @@
                             <div class="tab-pane fade active show" id="overview-tab" role="tabpanel">
                                 <div class="table-card mt-4">
                                     <div class="main-table">
-                                        <div class="table-responsive">
+                                        {{$dataTable->table(['class' => 'table table-hover border-0 w-100'])}}
+                                        {{--<div class="table-responsive">
                                             <table id="bootstrap-table" class="table">
                                                 <thead class="thead-dark">
                                                     <tr>
@@ -94,7 +97,7 @@
                                                 @endunless
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -363,9 +366,117 @@
 </div>
 @endsection
 @push('scripts')
-<!-- Sweet Alert 2 plugin -->
-<script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
+<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+{{$dataTable->scripts()}}
 
+<script>
+    var startDate = null;
+    var endDate = null;
+    var lastStartDate = null;
+    var lastEndDate = null;
+
+    @if(request('startDate') != '' && request('endDate') != '' )
+        startDate = '{{ request("startDate") }}';
+        endDate = '{{ request("endDate") }}';
+    @endif
+
+    @if(request('lastStartDate') !=='' && request('lastEndDate') !=='' )
+        lastStartDate = '{{ request("lastStartDate") }}';
+        lastEndDate = '{{ request("lastEndDate") }}';
+    @endif
+
+
+    $('#users-table').on('preXhr.dt', function(e, settings, data) {
+        var status = $('#status').val();
+        var employee = $('#employee').val();
+        var role = $('#role').val();
+        var skill = $('#skill').val();
+        var designation = $('#designation').val();
+        var department = $('#department').val();
+        var searchText = $('#search-text-field').val();
+        data['status'] = status;
+        data['employee'] = employee;
+        data['role'] = role;
+        data['skill'] = skill;
+        data['designation'] = designation;
+        data['department'] = department;
+        data['searchText'] = searchText;
+
+        /* If any of these following filters are applied, then dashboard conditions will not work  */
+        if(status == "all" || employee == "all" || role == "all"  || designation == "all" || searchText == ""){
+            data['startDate'] = startDate;
+            data['endDate'] = endDate;
+            data['lastStartDate'] = lastStartDate;
+            data['lastEndDate'] = lastEndDate;
+        }
+
+    });
+    const showTable = () => {
+            window.LaravelDataTables["users-table"].draw();
+    }
+    $('#employee, #status, #search-text-field, #role, #skill, #designation, #department').on('change keyup',
+        function() {
+            if ($('#status').val() != "all") {
+                $('#reset-filters').removeClass('d-none');
+                showTable();
+            } else if ($('#employee').val() != "all") {
+                $('#reset-filters').removeClass('d-none');
+                showTable();
+            } else if ($('#role').val() != "all") {
+                $('#reset-filters').removeClass('d-none');
+                showTable();
+            } else if ($('#designation').val() != "all") {
+                $('#reset-filters').removeClass('d-none');
+                showTable();
+            } else if ($('#department').val() != "all") {
+                $('#reset-filters').removeClass('d-none');
+                showTable();
+            } else if ($('#search-text-field').val() != "") {
+                $('#reset-filters').removeClass('d-none');
+                showTable();
+            } else {
+                $('#reset-filters').addClass('d-none');
+                showTable();
+            }
+        });
+
+    $('#reset-filters').click(function() {
+        $('#filter-form')[0].reset();
+        $('.filter-box .select-picker').selectpicker("refresh");
+        $('#reset-filters').addClass('d-none');
+        showTable();
+    });
+
+    $('#reset-filters-2').click(function() {
+        $('#filter-form')[0].reset();
+        $('.filter-box .select-picker').selectpicker("refresh");
+        $('#reset-filters').addClass('d-none');
+        showTable();
+    });
+
+    $('#quick-action-type').change(function() {
+        const actionValue = $(this).val();
+        if (actionValue != '') {
+            $('#quick-action-apply').removeAttr('disabled');
+
+            if (actionValue == 'change-status') {
+                $('.quick-action-field').addClass('d-none');
+                $('#change-status-action').removeClass('d-none');
+            } else {
+                $('.quick-action-field').addClass('d-none');
+            }
+        } else {
+            $('#quick-action-apply').attr('disabled', true);
+            $('.quick-action-field').addClass('d-none');
+        }
+    });
+
+    
+</script>
 
 <script type="text/javascript">
 
