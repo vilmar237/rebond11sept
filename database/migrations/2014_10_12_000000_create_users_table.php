@@ -28,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('password');
+            $table->timestamp('joining_date')->useCurrent();
+            $table->string('slack_username')->nullable()->unique();
             $table->string('random_key')->nullable();
             $table->string("activation_code")->nullable();
             $table->tinyInteger("is_active")->default(0)->nullable();

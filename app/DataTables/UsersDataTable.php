@@ -78,19 +78,19 @@ class UsersDataTable extends BaseDataTable
                 return $role;
             })
             ->addColumn('action', function ($row) {
-                $action = '<div class="task_view d-flex align-items-center">
+                $action = '<div class="d-flex align-items-center">
                                 <div class="dropdown dropdown-default dropdown-text dropdown-icon-item">
                                     <button class="option-btn-1" type="button" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a id="dropdownMenuLink-' . $row->id . '" href="' . url('admin/user/show', [$row->id]) . '" class="task_view_more dropdown-item"><i
+                                        <a id="dropdownMenuLink-' . $row->id . '" href="' . route('user.show', [$row->id]) . '" class="task_view_more dropdown-item"><i
                                                 class="fa-regular fa-address-card me-3"></i>' . __('app.view') . '</a>';
 
 
                 
-                $action .= '<a class="dropdown-item openRightModal" href="' . url('admin.user.edit', [$row->id]) . '">
+                $action .= '<a class="dropdown-item openRightModal" href="' . route('user.edit', [$row->id]) . '">
                             <i class="fa fa-edit mr-2"></i>
                             ' . trans('app.edit') . '
                         </a>';

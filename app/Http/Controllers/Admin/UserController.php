@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\Employee\UpdateRequest;
 use App\Http\Requests\Admin\Employee\StoreRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -135,7 +136,22 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->employee = User::withoutGlobalScope('active')->findOrFail($id);
+
+        abort_if(!auth()->user()->permission('users.edit'),403, __('Vous n\'avez pas de droit d\'accéder à cette page.'));
+
+        $this->pageTitle = __('app.update') . ' ' . __('app.employee');
+
+        $this->roles = Role::all();
+
+        if (request()->ajax()) {
+            $html = view('admin.user.ajax.edit', $this->data)->render();
+            return Reply::dataOnly(['status' => 'success', 'html' => $html, 'title' => $this->pageTitle]);
+        }
+
+        $this->view = 'admin.user.ajax.edit';
+
+        return view('admin.user.create', $this->data);
     }
 
     /**
@@ -145,9 +161,56 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $user = User::withoutGlobalScope('active')->findOrFail($id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+
+        if ($request->password != '') {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->phone = $request->mobile;
+        $user->gender = $request->gender;
+
+        if (request()->has('status')) {
+            $user->status = $request->status;
+        }
+
+        if($id != user()->id){
+            $user->login = $request->login;
+        }
+
+        if ($request->has('email_notifications')) {
+            $user->email_notifications = $request->email_notifications;
+        }
+
+        if ($request->image_delete == 'yes') {
+            Files::deleteFile($user->image, 'avatar');
+            $user->avatar = null;
+        }
+
+        if ($request->hasFile('image')) {
+
+            Files::deleteFile($user->avatar, 'avatar');
+            $user->avatar = Files::upload($request->image, 'avatar', 300);
+        }
+
+        $roleName = Role::where('id',$request->role)->first();
+
+        $user->role = $roleName->name;
+
+        $user->syncRoles($roleName);
+
+        $user->save();
+
+        if (user()->id == $user->id) {
+            session()->forget('user');
+        }
+
+        return Reply::successWithData(__('messages.updateSuccess'), ['redirectUrl' => route('employees.index')]);
     }
 
     /**
@@ -158,7 +221,19 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::withoutGlobalScope('active')->findOrFail($id);
+
+        abort_if(!auth()->user()->permission('users.delete'),403, __('Vous n\'avez pas de droit d\'accéder à cette page.'));
+
+        if ($user->hasRole('Super') && !in_array('Super', user_roles())) {
+            return Reply::error(__('messages.adminCannotDelete'));
+        }
+
+        $user->roles()->detach();
+
+        User::withoutGlobalScope('active')->where('id', $id)->delete();
+
+        return Reply::success(__('messages.employeeDeleted'));
     }
 
     /**

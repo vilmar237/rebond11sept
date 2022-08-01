@@ -501,7 +501,7 @@ return array(
     'totalMinutes' => 'Total Minutes',
     'memo' => 'Memo',
     'lastUpdatedBy' => 'Last updated by',
-    'employeeName' => 'Employee Name',
+    'employeeName' => 'Nom Membre',
     'startDate' => 'Start Date',
     'endDate' => 'End Date',
     'logTime' => 'Log Time',
