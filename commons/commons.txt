@@ -1,0 +1,358 @@
+/*
+    
+    
+    <!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=9">
+    <meta name="description" content="Vilmar">
+    <meta name="author" content="Vilmar">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title')</title>
+
+    <link rel="icon" type="image/png" href="{{ url()->asset('assets/images/fav.png')}}">
+
+    <link rel="preconnect" href="{{ url()->asset('assets/fonts.googleapis.com/index.html')}}">
+    <link rel="preconnect" href="{{ url()->asset('assets/fonts.gstatic.com/index.html')}}" crossorigin>
+    <link
+        href="{{ url()->asset('assets/fonts.googleapis.com/css25e50.css?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap')}}"
+        rel="stylesheet">
+    <link href='{{ url()->asset('assets/vendor/unicons-2.0.1/css/unicons.css')}}' rel='stylesheet'>
+    <link href="{{ url()->asset('assets/css/style.css')}}" rel="stylesheet">
+    
+    <link href="{{ url()->asset('assets/css/vertical-responsive-menu.min.css')}}" rel="stylesheet">
+    <link href="{{ url()->asset('assets/css/analytics.css')}}" rel="stylesheet">
+    
+    <link href="{{ url()->asset('assets/css/responsive.css')}}" rel="stylesheet">
+    <link href="{{ url()->asset('assets/css/night-mode.css')}}" rel="stylesheet">
+
+    <link href="{{ url()->asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
+    <link href="{{ url()->asset('assets/vendor/OwlCarousel/assets/owl.carousel.css')}}" rel="stylesheet">
+    <link href="{{ url()->asset('assets/vendor/OwlCarousel/assets/owl.theme.default.min.css')}}" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ asset('vendor/froiden/helper.css') }}">
+    <!-- Template CSS -->
+    <link type="text/css" rel="stylesheet" media="all" href="{{ asset('css/main.css') }}">
+    <link href="{{ url()->asset('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
+    <link href="{{ url()->asset('assets/css/customs.css')}}" rel="stylesheet">
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="{{ asset('vendor/css/datepicker.min.css') }}">
+
+    
+
+    <!-- TimePicker -->
+    <link rel="stylesheet" href="{{ asset('vendor/css/bootstrap-timepicker.min.css') }}">
+    
+
+    @stack('styles')
+
+    @notifyCss
+
+    
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    @include('layouts.partials.header')
+
+    <x:notify-messages />
+
+    @yield('content')
+    
+    @include('layouts.partials.footer')
+
+    
+    
+    <script src="{{ url()->asset('assets/js/vertical-responsive-menu.min.js')}}"></script>
+    <script src="{{ url()->asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    
+    <script src="{{ asset('vendor/froiden/helper.js') }}"></script>
+    <!-- Global Required Javascript -->
+    <script src="{{ url()->asset('js/main.js') }}"></script>
+    <script src="{{ url()->asset('assets/vendor/OwlCarousel/owl.carousel.js')}}"></script>
+    <script src="{{ url()->asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
+    
+    <script src="{{ url()->asset('assets/js/custom.js')}}"></script>
+    <script src="{{ url()->asset('assets/js/night-mode.js')}}"></script>
+    <script src="{{ url()->asset('assets/js/customs.js')}}"></script>
+
+    {{-- Timepicker --}}
+    <script src="{{ asset('vendor/jquery/bootstrap-timepicker.min.js') }}"></script>
+
+    
+
+    
+    
+
+    
+
+    
+
+    @stack('scripts')
+
+    <script>
+        const MODAL_XL = '#myModalXl';
+        const datepickerConfig = {
+            formatter: (input, date, instance) => {
+                input.value = moment(date).format('{{ global_setting()->moment_date_format }}')
+            },
+            showAllDates: true,
+            customDays: ["@lang('app.weeks.Sun')", "@lang('app.weeks.Mon')", "@lang('app.weeks.Tue')",
+                "@lang('app.weeks.Wed')", "@lang('app.weeks.Thu')", "@lang('app.weeks.Fri')",
+                "@lang('app.weeks.Sat')"
+            ],
+            customMonths: ["@lang('app.months.January')", "@lang('app.months.February')",
+                "@lang('app.months.March')", "@lang('app.months.April')", "@lang('app.months.May')",
+                "@lang('app.months.June')", "@lang('app.months.July')", "@lang('app.months.August')",
+                "@lang('app.months.September')", "@lang('app.months.October')",
+                "@lang('app.months.November')", "@lang('app.months.December')"
+            ],
+            customOverlayMonths: ["@lang('app.monthsShort.Jan')", "@lang('app.monthsShort.Feb')",
+                "@lang('app.monthsShort.Mar')", "@lang('app.monthsShort.Apr')",
+                "@lang('app.monthsShort.May')", "@lang('app.monthsShort.Jun')",
+                "@lang('app.monthsShort.Jul')", "@lang('app.monthsShort.Aug')",
+                "@lang('app.monthsShort.Sep')", "@lang('app.monthsShort.Oct')",
+                "@lang('app.monthsShort.Nov')", "@lang('app.monthsShort.Dec')"
+            ],
+            overlayButton: "@lang('app.submit')",
+            overlayPlaceholder: "@lang('app.enterYear')",
+            startDay: parseInt("{{ date('Y-m-d', strtotime("+7 day")) }}")
+        };
+
+        /*const daterangeConfig = {
+            "@lang('app.today')": [moment(), moment()],
+            "@lang('app.last30Days')": [moment().subtract(29, 'days'), moment()],
+            "@lang('app.thisMonth')": [moment().startOf('month'), moment().endOf('month')],
+            "@lang('app.lastMonth')": [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month')
+                .endOf(
+                    'month')
+            ],
+            "@lang('app.last90Days')": [moment().subtract(89, 'days'), moment()],
+            "@lang('app.last6Months')": [moment().subtract(6, 'months'), moment()],
+            "@lang('app.last1Year')": [moment().subtract(1, 'years'), moment()]
+        };
+
+        const daterangeLocale = {
+            "format": "{{ global_setting()->moment_date_format }}",
+            "customRangeLabel": "@lang('app.customRange')",
+            "separator": " @lang('app.to') ",
+            "applyLabel": "@lang('app.apply')",
+            "cancelLabel": "@lang('app.cancel')",
+            "daysOfWeek": ['@lang("app.weeks.Sun")', '@lang("app.weeks.Mon")',
+                '@lang("app.weeks.Tue")',
+                '@lang("app.weeks.Wed")', '@lang("app.weeks.Thu")', '@lang("app.weeks.Fri")',
+                '@lang("app.weeks.Sat")'
+            ],
+            "monthNames": ['@lang("app.months.January")', '@lang("app.months.February")',
+                "@lang('app.months.March')", "@lang('app.months.April')",
+                "@lang('app.months.May')",
+                "@lang('app.months.June')", "@lang('app.months.July')",
+                "@lang('app.months.August')",
+                "@lang('app.months.September')", "@lang('app.months.October')",
+                "@lang('app.months.November')", "@lang('app.months.December')"
+            ],
+            "firstDay": parseInt(date)
+        };*/
+        const dropifyMessages = {
+            default: "@lang('app.dragDrop')",
+            replace: "@lang('app.dragDropReplace')",
+            remove: "@lang('app.remove')",
+            error: "@lang('messages.errorOccured')",
+        };
+
+        const DROPZONE_FILE_ALLOW = "{{ global_setting()->allowed_file_types }}";
+        const DROPZONE_MAX_FILESIZE = "{{ global_setting()->allowed_file_size }}";
+        Dropzone.prototype.defaultOptions.dictDefaultMessage = "{{ __('modules.projectTemplate.dropFile') }}";
+    </script>
+
+    @notifyJs
+</body>
+
+</html>
+    
+    
+    
+    */
+
+    <form id="save-employee-data-form">
+                                @include('sections.password-autocomplete-hide')
+                                <div class="container bg-white rounded">
+                                    <div class="row p-20">
+                                        <div class="col-lg-9 col-xl-10">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-6">
+                                                    <label class="f-14 text-dark-grey mb-12" for="first_name">{{__('modules.employees.firstname')}}<sup class="f-14 mr-1">*</sup></label>
+                                                    <input type="text" required class="form-control height-35 f-14" placeholder="{{__('placeholders.firstname')}}"
+                                                        value="{{ old('first_name') }}" name="first_name" id="first_name">
+                                                </div>
+                                                <div class="col-lg-4 col-md-6">
+                                                    <label class="f-14 text-dark-grey mb-12" for="last_name">{{__('modules.employees.employeeName')}}<sup class="f-14 mr-1">*</sup></label>
+                                                    <input type="text" required class="form-control height-35 f-14" placeholder="{{__('placeholders.name')}}"
+                                                        value="{{ old('last_name') }}" name="last_name" id="last_name">
+                                                </div>
+                                                <div class="col-lg-4 col-md-6">
+                                                    <label class="f-14 text-dark-grey mb-12" for="last_name">{{__('modules.employees.employeeEmail')}}<sup class="f-14 mr-1">*</sup></label>
+                                                    <input type="email" required class="form-control height-35 f-14" placeholder="{{__('placeholders.email')}}"
+                                                        value="{{ old('email') }}" name="email" id="email">
+                                                </div>
+                                                <div class="col-lg-4 col-md-6">
+                                                    <label class="mt-3" for="password">{{__('app.password')}}<sup class="f-14 mr-1">*</sup></label>
+                                                    <div class="input-group">
+
+                                                        <input type="password" name="password" id="password"
+                                                            class="form-control height-35 f-14">
+                                                            <div class="input-group-append">
+                                                                <button type="button" data-bs-toggle="tooltip"
+                                                                    data-bs-original-title="@lang('app.viewPassword')"
+                                                                    class="btn btn-outline-secondary border-grey height-35 toggle-password"><i
+                                                                        class="fa fa-eye"></i></button>
+                                                            </div>
+                                                            
+                                                        <div class="input-group-append">
+                                                            <button id="random_password" type="button" data-bs-toggle="tooltip"
+                                                                data-bs-original-title="@lang('modules.client.generateRandomPassword')"
+                                                                class="btn btn-outline-secondary border-grey height-35"><i
+                                                                    class="fa fa-random"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <small class="form-text text-muted">@lang('placeholders.password')</small>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6">
+                                                    <label class="mt-3" for="employee_designation">{{__('app.designation')}}<sup class="f-14 mr-1">*</sup></label>
+                                                    
+                                                    <div class="input-group">
+                                                        <select class="selectpicker" name="role"
+                                                            id="employee_designation" data-live-search="true" required>
+                                                            <option value="">--</option>
+                                                            @foreach ($roles as $designation)
+                                                                <option value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-xl-2">
+                                            <div class ='form-group my-3'>
+                                                <label class="mt-3" popover="{{__('messages.fileFormat.ImageFile')}}" for="image">{{__('modules.profile.profilePicture')}}</label>
+                                                <input type="file" class="dropify mr-0 mr-lg-2 mr-md-2 cropper" id="image" name="image"
+                                                    data-allowed-file-extensions="png jpg jpeg"
+                                                    data-height="119"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="form-group my-3">
+                                                <label class="mt-3" for="phone">{{__('app.mobile')}}</label>
+                                                
+                                                <input type="tel" class="form-control height-35 f-14" placeholder="ex. 695035506" value="{{ old('phone') }}" name="phone" id="mobile">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="form-group mb-0">
+                                                <label class="mt-3" for="gender">{{__('modules.employees.gender')}}</label>
+                                                <select name="gender" id="gender" data-live-search="true" class="selectpicker" data-size="8" data-bs-dropdown-align-right="true">
+                                                    <option value="">--</option>
+                                                    <option value="male">@lang('app.male')</option>
+                                                    <option value="female">@lang('app.female')</option>
+                                                    <option value="others">@lang('app.others')</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="form-group my-3">
+                                                <label class="mt-3" for="gender">{{__('modules.employees.joiningDate')}}</label>
+                                                <input type="text" class="form-control date-picker height-35 f-14"
+                                                    placeholder="__('placeholders.date')" required value="{{now(global_setting()->timezone)->format(global_setting()->date_format)}}" name="joining_date"
+                                                    id="joining_date">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="form-group my-3">
+                                                <label class="mt-3" for="gender">{{__('modules.employees.dateOfBirth')}}</label>
+                                                <input type="text" class="form-control date-picker height-35 f-14"
+                                                    placeholder="{{__('placeholders.date')}}" value="{{old('date_of_birth')}}" name="date_of_birth"
+                                                    id="date_of_birth">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group my-3">
+                                                <label class="mt-3" for="gender">{{__('app.address')}}</label>
+                                                <textarea class="form-control mr-0 mr-lg-2 mr-md-2 f-14 pt-2" rows="3" placeholder="{{ __('placeholders.address') }}" name="address"
+                                                    id="address">{{ old('address') }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addorganisationLabel">@lang('modules.client.clientOtherDetails')</h5>
+                                    </div>
+                                        
+                                    <div class="row p-20">
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="form-group my-3 form-check-inline custom-control custom-radio mt-2 mr-3">
+                                                <label class="f-14 text-dark-grey mb-12 w-100"
+                                                    for="usr">@lang('modules.client.clientCanLogin')</label>
+                                                <div class="d-flex">
+                                                    <label class="mt-3" for="login">
+                                                        <input type="radio" value="enable" id="login-yes"
+                                                            name="login" checked="true">
+                                                            {{__('app.yes')}}
+                                                    </label>&nbsp;&nbsp;&nbsp;
+                                                    <label class="mt-3" for="login">
+                                                        <input type="radio" value="disable" id="login-no"
+                                                        name="login" checked="true">
+                                                        {{__('app.no')}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="form-group my-3">
+                                                <label class="f-14 text-dark-grey mb-12 w-100"
+                                                    for="usr">@lang('modules.emailSettings.emailNotifications')</label>
+                                                <div class="d-flex">
+                                                    <div class="d-flex">
+                                                        <label class="mt-3" for="login">
+                                                            <input type="radio" value="yes" id="notification-yes"
+                                                                name="email_notifications" checked="true">
+                                                                {{__('app.yes')}}
+                                                        </label>&nbsp;&nbsp;&nbsp;
+                                                        <label class="mt-3" for="login">
+                                                            <input type="radio" value="no" id="notification-no"
+                                                            name="email_notifications" checked="true">
+                                                            {{__('app.no')}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6">
+                                            <label class="my-3" for="slack_username">{{__('modules.employees.slackUsername')}}</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text f-14 bg-white-shade">@</span>
+                                                </div>
+
+                                                <input type="text" class="form-control height-35 f-14" name="slack_username"
+                                                    id="slack_username">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class= "w-100 border-top-grey d-block d-lg-flex d-md-flex justify-content-start px-4 py-3">
+                                        <button type="button" id="save-employee-form" class="mr-3 btn-primary rounded f-14 p-2"><i class="fa fa-check mr-1"></i>
+                                        
+                                            @lang('app.save')
+                                        </button>
+                                        <a href="route('user.index')" class="btn-cancel rounded f-14 p-2 border-0">
+                                            @lang('app.cancel')
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </form>

@@ -12,6 +12,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Artisan;
+
 if (!function_exists('user')) {
 
     /**
@@ -46,6 +48,29 @@ if (!function_exists('global_setting')) {
         }
 
         return session('global_setting');
+    }
+
+}
+
+if (!function_exists('check_migrate_status')) {
+
+    // @codingStandardsIgnoreLine
+    function check_migrate_status()
+    {
+
+        if (!session()->has('check_migrate_status')) {
+
+            $status = Artisan::call('migrate:check');
+
+            if ($status && !request()->ajax()) {
+                Artisan::call('migrate', array('--force' => true)); // Migrate database
+                Artisan::call('optimize:clear');
+            }
+
+            session(['check_migrate_status' => 'Good']);
+        }
+
+        return session('check_migrate_status');
     }
 
 }

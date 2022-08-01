@@ -1,3 +1,55 @@
+const init = function (parent = "") {
+    if (parent != "") {
+        parent = parent + " ";
+    }
+    /*******************************************************
+                   SELECT Start
+*******************************************************/
+    if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+    ) {
+        $(parent + ".select-picker").selectpicker("mobile");
+    } else {
+        $(parent + ".select-picker").selectpicker();
+    }
+    // $(parent + ".select2").select2();
+    /*******************************************************
+                   SELECT End
+*******************************************************/
+    //turn off autocomplete for all inputs
+    $(parent + "input").attr("autocomplete", "off");
+
+    //initialise tooltip
+    $("body").tooltip({
+        selector: '[data-toggle="tooltip"]',
+        trigger: 'hover'
+    });
+
+    //initialise popover
+    $(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+
+    //initialise dropify
+    var drEvent = $(".dropify").dropify({
+        messages: dropifyMessages,
+    });
+
+    drEvent.on("dropify.afterClear", function (event, element) {
+        var elementID = element.element.id;
+        var elementName = element.element.name;
+        if ($("#" + elementID + "_delete").length == 0) {
+            $("#" + elementID).after(
+                '<input type="hidden" name="' +
+                    elementName +
+                    '_delete" id="' +
+                    elementID +
+                    '_delete" value="yes">'
+            );
+        }
+    });
+};
+
 //select row in datatable
 const dataTableRowCheck = (id) => {
     if ($(".select-table-row:checked").length > 0) {
@@ -72,3 +124,11 @@ const resetActionButtons = () => {
 function deSelectAll() {
     $("#select-all-table").prop("checked", false);
 }
+
+//show hide secret values
+$("body").on("click", ".toggle-password", function () {
+    var $selector = $(this).closest(".input-group").find("input.form-control");
+    $(this).find(".svg-inline--fa").toggleClass("fa-eye fa-eye-slash");
+    var $type = $selector.attr("type") === "password" ? "text" : "password";
+    $selector.attr("type", $type);
+});

@@ -43,4 +43,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::put('user/{id}/profile', 'Admin\UserController@update_profile');
     Route::get('user/{id}/setting', 'Admin\UserController@setting');
     Route::put('user/{id}/setting', 'Admin\UserController@update_setting');
+
+    // Cropper Model
+    Route::get('cropper/{element}', [\App\Http\Controllers\Admin\ImageController::class, 'cropper'])->name('cropper');
+
+    Route::post('image/upload', [\App\Http\Controllers\Admin\ImageController::class, 'store'])->name('image.store');
+
+    // Get quill image uploaded
+Route::get('quill-image/{image}', [\App\Http\Controllers\Admin\ImageController::class, 'getImage'])->name('image.getImage');
 });

@@ -17,7 +17,7 @@
                         <h3><i class="fa-solid fa-user-group me-3"></i>Liste Utilisateurs</h3>
                     </div>
                 </div>
-                <div class="col-md-12" id="reset-filters">
+                <div class="col-md-12">
                     <div class="conversion-setup">
                         <div class="main-card mt-5">
                             <div class="dashboard-wrap-content p-4">

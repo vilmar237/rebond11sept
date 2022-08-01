@@ -1,0 +1,39 @@
+// (2)Variable Reset, Bootstrap mixins & Functions
+@import "variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+// cropper.js CSS
+@import "../../node_modules/cropperjs/src/css/cropper";
+
+
+// (3)Common CSS
+@import "includes/tabs";
+@import "includes/header";
+
+// (5)Reset CSS
+@import "includes/reset";
+
+// (6)Custom CSS
+@import "custom";
+
+//IMPORT STYLE
+@import "style";
+
+//FORM CSS
+@import "form";
+
+//BTN CSS
+@import "btn";
+
+//UI LABELS CSS
+@import "labels";
+
+//UI CARDS CSS
+@import "cards";
+
+//UI TABLES CSS
+@import "tables";
+
+//MESSAGES CSS
+@import "messages";

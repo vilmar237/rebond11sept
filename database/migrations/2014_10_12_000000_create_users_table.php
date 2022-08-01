@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->text('address')->nullable();
             $table->string('avatar')->nullable();
             $table->enum('role', ['Super', 'Admin', 'Customer']);
+            $table->boolean('email_notifications')->default(1);
+            $table->enum('login', ['enable', 'disable'])->default('enable');
             $table->timestamp('email_verified_at')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('password');
