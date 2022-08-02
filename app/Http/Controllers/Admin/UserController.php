@@ -163,54 +163,69 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $user = User::withoutGlobalScope('active')->findOrFail($id);
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
+        DB::beginTransaction();
+        try {
+            $user = User::withoutGlobalScope('active')->findOrFail($id);
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
 
-        if ($request->password != '') {
-            $user->password = bcrypt($request->password);
+            if ($request->password != '') {
+                $user->password = bcrypt($request->password);
+            }
+
+            $user->phone = $request->mobile;
+            $user->gender = $request->gender;
+
+            if (request()->has('status')) {
+                $user->status = $request->status;
+            }
+
+            if($id != user()->id){
+                $user->login = $request->login;
+            }
+
+            if ($request->has('email_notifications')) {
+                $user->email_notifications = $request->email_notifications;
+            }
+
+            if ($request->image_delete == 'yes') {
+                Files::deleteFile($user->image, 'avatar');
+                $user->avatar = null;
+            }
+
+            if ($request->hasFile('image')) {
+
+                Files::deleteFile($user->avatar, 'avatar');
+                $user->avatar = Files::upload($request->image, 'avatar', 300);
+            }
+
+            $roleName = Role::where('id',$request->role)->first();
+
+            $user->role = $roleName->name;
+
+            $user->syncRoles($roleName);
+
+            $user->save();
+
+            if (user()->id == $user->id) {
+                session()->forget('user');
+            }
+            // Commit Transaction
+            DB::commit();
+
+        } catch (\Swift_TransportException $e) {
+            // Rollback Transaction
+            DB::rollback();
+            return Reply::error('Veuillez configurer les détails SMTP pour ajouter un membre. Visiter Paramètres -> Paramètres de notification pour configurer smtp', 'smtp_error');
+        } catch (\Exception $e) {
+            Log::error($e);
+            // Rollback Transaction
+            DB::rollback();
+            return Reply::error('Une erreur s\'est produite lors de l\'insertion des données. Veuillez réessayer ou contacter l\'assistance');
         }
 
-        $user->phone = $request->mobile;
-        $user->gender = $request->gender;
-
-        if (request()->has('status')) {
-            $user->status = $request->status;
-        }
-
-        if($id != user()->id){
-            $user->login = $request->login;
-        }
-
-        if ($request->has('email_notifications')) {
-            $user->email_notifications = $request->email_notifications;
-        }
-
-        if ($request->image_delete == 'yes') {
-            Files::deleteFile($user->image, 'avatar');
-            $user->avatar = null;
-        }
-
-        if ($request->hasFile('image')) {
-
-            Files::deleteFile($user->avatar, 'avatar');
-            $user->avatar = Files::upload($request->image, 'avatar', 300);
-        }
-
-        $roleName = Role::where('id',$request->role)->first();
-
-        $user->role = $roleName->name;
-
-        $user->syncRoles($roleName);
-
-        $user->save();
-
-        if (user()->id == $user->id) {
-            session()->forget('user');
-        }
-
-        return Reply::successWithData(__('messages.updateSuccess'), ['redirectUrl' => route('employees.index')]);
+        return Reply::successWithData(__('messages.updateSuccess'), ['redirectUrl' => route('user.index')]);
     }
 
     /**

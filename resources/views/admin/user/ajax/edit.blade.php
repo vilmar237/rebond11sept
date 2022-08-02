@@ -21,7 +21,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <x-forms.text fieldId="first_name" :fieldLabel="__('modules.employees.firstname')"
-                                                        fieldName="name" :fieldValue="$employee->first_name" fieldRequired="true"
+                                                        fieldName="first_name" :fieldValue="$employee->first_name" fieldRequired="true"
                                                         :fieldPlaceholder="__('placeholders.firstname')">
                                                     </x-forms.text>
                                                 </div>
@@ -64,7 +64,7 @@
                                                         :fieldLabel="__('app.designation')" fieldRequired="true">
                                                     </x-forms.label>
                                                     <x-forms.input-group>
-                                                        <select class="form-control select-picker" name="designation"
+                                                        <select class="form-control select-picker" name="role"
                                                             id="employee_designation" data-live-search="true">
                                                             <option value="">--</option>
                                                             @foreach ($roles as $designation)
@@ -165,12 +165,12 @@
                                                     <label class="f-14 text-dark-grey mb-12 w-100" for="usr">@lang('app.status')</label>
                                                     <div class="d-flex">
                                                         <x-forms.radio fieldId="status-active" :fieldLabel="__('app.active')"
-                                                            fieldValue="active" fieldName="status"
-                                                            checked="($employee->status == 'active') ? 'checked' : ''">
+                                                            fieldValue="1" fieldName="status"
+                                                            checked="($employee->status == 1) ? 'checked' : ''">
                                                         </x-forms.radio>
                                                         <x-forms.radio fieldId="status-inactive" :fieldLabel="__('app.inactive')"
-                                                            fieldValue="deactive" fieldName="status"
-                                                            :checked="($employee->status == 'deactive') ? 'checked' : ''">
+                                                            fieldValue="0" fieldName="status"
+                                                            :checked="($employee->status == 0) ? 'checked' : ''">
                                                         </x-forms.radio>
                                                     </div>
                                                 </div>

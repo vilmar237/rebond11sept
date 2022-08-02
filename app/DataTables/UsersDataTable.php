@@ -20,6 +20,7 @@ class UsersDataTable extends BaseDataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
+    /*TODO: Ajouter la possibilité de voir les détails utilisateurs */
     public function dataTable($query)
     {
         $roles = Role::where('name', '<>', 'Customer')->get();
@@ -84,8 +85,8 @@ class UsersDataTable extends BaseDataTable
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a id="dropdownMenuLink-' . $row->id . '" href="' . route('user.show', [$row->id]) . '" class="task_view_more dropdown-item"><i
+                                    <div class="dropdown-menu dropdown-menu-right"><!--' . route('user.show', [$row->id]) . '-->
+                                        <a id="dropdownMenuLink-' . $row->id . '" href="javascript::void(0)" class="task_view_more dropdown-item"><i
                                                 class="fa-regular fa-address-card me-3"></i>' . __('app.view') . '</a>';
 
 

@@ -41,7 +41,7 @@ return array (
   'failed' => 'Failed',
   'hideCompletedTasks' => 'Hide Completed Tasks',
   'dueDate' => 'Due Date',
-  'status' => 'Status',
+  'status' => 'Statut',
   'selectStatus' => 'Select Status',
   'task' => 'Task',
   'tasks' => 'Tasks',

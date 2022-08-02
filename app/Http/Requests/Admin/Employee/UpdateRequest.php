@@ -30,7 +30,6 @@ class UpdateRequest extends CoreRequest
             'last_name'  => 'required|max:50',
             'role' => 'required',
             'joining_date' => 'required',
-            'last_date' => 'nullable|date_format:"' . $setting->date_format . '"|after_or_equal:joining_date',
             'date_of_birth' => 'nullable|date_format:"' . $setting->date_format . '"|before_or_equal:'.now($setting->timezone)->toDateString(),
         ];
 
