@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-main-title">
-                        <h3><i class="fa-solid fa-calendar-days me-3"></i>Events</h3>
+                        <h3><i class="fa-solid fa-calendar-days me-3"></i>Réservations</h3>
                     </div>
                 </div>
                 <div class="col-md-12">
