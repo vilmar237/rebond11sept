@@ -103,12 +103,12 @@
                         <tbody>
                             <tr>
                                 <td style="text-align: center; padding:25px 20px 0;">
-                                    <p style="font-size: 13px;">Copyright © {{ Date('Y') }} {{setting('company_name')}}. {{setting('site_copyright')}}. <br> Conçu par {{setting('company_name')}} <a style="color: #6576ff; text-decoration:none;" href="{{setting('site_url')}}">{{setting('company_name')}}</a>.</p>
+                                    <p style="font-size: 13px;">Copyright © {{ Date('Y') }} {{global_setting()->company_name}}. {{global_setting()->site_copyright}}. <br> Conçu par {{global_setting()->company_name}} <a style="color: #6576ff; text-decoration:none;" href="{{global_setting()->site_url}}">{{global_setting()->company_name}}</a>.</p>
                                     <ul style="margin: 10px -4px 0;padding: 0;">
                                         <li style="display: inline-block; list-style: none; padding: 4px;"><a style="display: inline-block; height: 30px; width:30px;border-radius: 50%; background-color: #ffffff" href="#"><img style="width: 30px" src="http://localhost:8000/{{public_path('assets/img/facebook.png')}}" alt="brand"></a></li>
                                         <li style="display: inline-block; list-style: none; padding: 4px;"><a style="display: inline-block; height: 30px; width:30px;border-radius: 50%; background-color: #ffffff" href="#"><img style="width: 30px" src="http://localhost:8000/{{public_path('assets/img/twitter.png')}}" alt="brand"></a></li>
                                     </ul>
-                                    <p style="padding-top: 15px; font-size: 12px;">Ce mail vous a été envoyé en tant qu'utilisateur enregistré de <a style="color: #6576ff; text-decoration:none;" href="{{setting('site_url')}}">rebond.cm</a>. Pour mettre à jour vos préférences d'e-mails <a style="color: #6576ff; text-decoration:none;" href="#">cliquer ici</a>.</p>
+                                    <p style="padding-top: 15px; font-size: 12px;">Ce mail vous a été envoyé en tant qu'utilisateur enregistré de <a style="color: #6576ff; text-decoration:none;" href="{{global_setting()->site_url}}">rebond.cm</a>. Pour mettre à jour vos préférences d'e-mails <a style="color: #6576ff; text-decoration:none;" href="#">cliquer ici</a>.</p>
                                 </td>
                             </tr>
                         </tbody>

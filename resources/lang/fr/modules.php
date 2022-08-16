@@ -1647,7 +1647,7 @@ return array(
   'ticketForm' => 'Ticket Form',
   'orders' => array(
     'createOrder' => 'Create Order',
-    'orderDate' => 'Order Date',
+    'orderDate' => 'Date de Commande',
     'orderNumber' => 'Order Number'
   ),
   'pusher' => array(

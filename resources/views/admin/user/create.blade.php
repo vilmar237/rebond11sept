@@ -1,5 +1,7 @@
 @extends('layouts.app_admin')
-
+@section('title')
+Ajouter un membre
+@endsection
 @push('styles')
 
 @endpush

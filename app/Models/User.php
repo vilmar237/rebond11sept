@@ -59,7 +59,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //protected $appends = ['image_url'];
+    protected $appends = ['modules'];
 
     protected static function boot()
     {
@@ -97,5 +97,10 @@ class User extends Authenticatable
         }
 
         return $has_valid_avatar;
+    }
+
+    public function getModulesAttribute()
+    {
+        return user_modules();
     }
 }

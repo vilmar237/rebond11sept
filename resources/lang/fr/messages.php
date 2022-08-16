@@ -14,4 +14,5 @@ return array(
     'adminCannotDelete' => 'L\'utilisateur Super administrateur ne peut pas être supprimé.',
     'employeeDeleted' => 'Employé supprimé avec succès.',
     'updateSuccess' => 'Mis à jour avec succès.',
+    'permissionDenied' => 'Accès refusé.',
 );

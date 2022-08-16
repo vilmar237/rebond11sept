@@ -50,5 +50,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::post('image/upload', [\App\Http\Controllers\Admin\ImageController::class, 'store'])->name('image.store');
 
     // Get quill image uploaded
-Route::get('quill-image/{image}', [\App\Http\Controllers\Admin\ImageController::class, 'getImage'])->name('image.getImage');
+    Route::get('quill-image/{image}', [\App\Http\Controllers\Admin\ImageController::class, 'getImage'])->name('image.getImage');
+
+    //Booking routes
+    Route::resource('bookings', 'Admin\BookingController');
 });
