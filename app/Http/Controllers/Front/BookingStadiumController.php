@@ -67,68 +67,81 @@ class BookingStadiumController extends FrontController
             $this->new_start_time = $request->input('start');
             $this->new_end_time = $request->input('end');
 
-            //Récupérer tous les stades s'il y en a plus d'un - Ceci marchera si on a plus d'un stade aussi
+            //Prévenir les réservations en dessous de l'heure actuelle
+            $nowTimeDate = Carbon::now();
+            $newTime = Carbon::now()->addHour();
+            
+            
+            if($this->new_start_time <  $newTime && $this->new_date == Carbon::now()->format('Y/m/d'))
+            {
+                return redirect('/booking-stadium')->withErrors('Heure de début du jour, dépassée.');
+            }else{
+               
+            
+            
 
-            $this->stadia = Stadium::get();
+                //Récupérer tous les stades s'il y en a plus d'un - Ceci marchera si on a plus d'un stade aussi
 
-            //Parcourir les stades afin de vérifier les disponibilités
-            foreach ($this->stadia as $stadium) {
+                $this->stadia = Stadium::get();
 
-                //Vérifier s'il existe des réservations dans la BD
-                if ($this->stadium_bookings_exist($stadium)) {
+                //Parcourir les stades afin de vérifier les disponibilités
+                foreach ($this->stadia as $stadium) {
 
-                    //Convertir le format de la date en englais pour MYSQL
-                    $this->new_date = date('Y-m-d', strtotime(str_replace('-', '/', $this->new_date)));
-                    
-                    //Parcourir les réservations et vérifier les heures prises
-                    foreach ($stadium->stadium_bookings as $stadium_booking) {
+                    //Vérifier s'il existe des réservations dans la BD
+                    if ($this->stadium_bookings_exist($stadium)) {
 
-                        //Récupérer les dates, heures de début et de fin occupées
-                        $old_date = Carbon::parse($stadium_booking->date)->format('Y-m-d');
-                        $old_start_time = Carbon::parse($stadium_booking->start)->format('H:i');
-                        $old_end_time = Carbon::parse($stadium_booking->end)->format('H:i');
+                        //Convertir le format de la date en englais pour MYSQL
+                        $this->new_date = date('Y-m-d', strtotime(str_replace('-', '/', $this->new_date)));
                         
-                        //Vérifier si la date entrée par l'utilisateur est égale à une entrée de date réservée
-                        if($old_date == $this->new_date){
-                        
-                            //Vérifier proprement que les heures réservées par un client actuel ne correspondent pas aux heures occupées
-                            $startTime = strtotime($this->new_start_time);
-                            $endTime   = strtotime($this->new_end_time);
+                        //Parcourir les réservations et vérifier les heures prises
+                        foreach ($stadium->stadium_bookings as $stadium_booking) {
+
+                            //Récupérer les dates, heures de début et de fin occupées
+                            $old_date = Carbon::parse($stadium_booking->date)->format('Y-m-d');
+                            $old_start_time = Carbon::parse($stadium_booking->start)->format('H:i');
+                            $old_end_time = Carbon::parse($stadium_booking->end)->format('H:i');
                             
-                            $chkStartTime = strtotime($old_start_time);
-                            $chkEndTime   = strtotime($old_end_time);
+                            //Vérifier si la date entrée par l'utilisateur est égale à une entrée de date réservée
+                            if($old_date == $this->new_date){
                             
-                            if($chkStartTime > $startTime && $chkEndTime < $endTime)
-                            {
-                                // L'heure se situe entre l'heure de début et l'heure de fin
-                                notify()->error('Plage horaire déjà prise. ', 'Réservation');
-                                return redirect('/booking-stadium')->withErrors('Plage horaire déjà prise.');
+                                //Vérifier proprement que les heures réservées par un client actuel ne correspondent pas aux heures occupées
+                                $startTime = strtotime($this->new_start_time);
+                                $endTime   = strtotime($this->new_end_time);
+                                
+                                $chkStartTime = strtotime($old_start_time);
+                                $chkEndTime   = strtotime($old_end_time);
+                                
+                                if($chkStartTime > $startTime && $chkEndTime < $endTime)
+                                {
+                                    // L'heure se situe entre l'heure de début et l'heure de fin
+                                    notify()->error('Plage horaire déjà prise. ', 'Réservation');
+                                    return redirect('/booking-stadium')->withErrors('Plage horaire déjà prise.');
+                                }
+                                elseif(($chkStartTime > $startTime && $chkStartTime < $endTime) || ($chkEndTime > $startTime && $chkEndTime < $endTime))
+                                {
+                                    // Vérifier que l'heure de début ou de fin se situe entre l'heure de début et l'heure de fin
+                                    notify()->error('Plage horaire déjà prise. ', 'Réservation');
+                                    return redirect('/booking-stadium')->withErrors('Plage horaire déjà prise.');
+                                }
+                                elseif($chkStartTime==$startTime || $chkEndTime==$endTime)
+                                {
+                                    // Vérifier que l'heure de début ou de fin se situe à la limite de l'heure de début et de fin
+                                    notify()->error('Plage horaire déjà prise. ', 'Réservation');
+                                    return redirect('/booking-stadium')->withErrors('Plage horaire déjà prise.');
+                                }
+                                elseif($startTime > $chkStartTime && $endTime < $chkEndTime)
+                                {
+                                    // l'heure de début et de fin est comprise entre l'heure de début et l'heure de fin de la vérification.
+                                    notify()->error('Plage horaire déjà prise. ', 'Réservation');
+                                    return redirect('/booking-stadium')->withErrors('Plage horaire déjà prise.');
+                                }
                             }
-                            elseif(($chkStartTime > $startTime && $chkStartTime < $endTime) || ($chkEndTime > $startTime && $chkEndTime < $endTime))
-                            {
-                                // Vérifier que l'heure de début ou de fin se situe entre l'heure de début et l'heure de fin
-                                notify()->error('Plage horaire déjà prise. ', 'Réservation');
-                                return redirect('/booking-stadium')->withErrors('Plage horaire déjà prise.');
-                            }
-                            elseif($chkStartTime==$startTime || $chkEndTime==$endTime)
-                            {
-                                // Vérifier que l'heure de début ou de fin se situe à la limite de l'heure de début et de fin
-                                notify()->error('Plage horaire déjà prise. ', 'Réservation');
-                                return redirect('/booking-stadium')->withErrors('Plage horaire déjà prise.');
-                            }
-                            elseif($startTime > $chkStartTime && $endTime < $chkEndTime)
-                            {
-                                // l'heure de début et de fin est comprise entre l'heure de début et l'heure de fin de la vérification.
-                                notify()->error('Plage horaire déjà prise. ', 'Réservation');
-                                return redirect('/booking-stadium')->withErrors('Plage horaire déjà prise.');
-                            }
+                            
                         }
-                         
                     }
+                    $sn = $stadium->stadium_number;
                 }
-                $sn = $stadium->stadium_number;
             }
-
         }else{
             return redirect('/booking-stadium')->withErrors('Il n\'est pas possible de réserver Rebond pour le moment.');
         }

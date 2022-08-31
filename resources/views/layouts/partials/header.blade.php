@@ -125,11 +125,6 @@
                             </ul>
                         </li>
                         @endauth
-                        <li>
-                            <div class="night_mode_switch__btn">
-                                <div id="night-mode" class="fas fa-moon fa-sun"></div>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
