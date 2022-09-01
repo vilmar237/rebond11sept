@@ -15,11 +15,11 @@
                     <div class="main-card add-organisation-card p-4 mt-5">
                         <div class="ocard-left">
                             <div class="ocard-avatar">
-                                <img src="images/profile-imgs/img-13.jpg" alt="">
+                                <img src="{{ asset('storage/avatars/'.Auth::user()->avatar)}}" alt="">
                             </div>
                             <div class="ocard-name">
-                                <h4>John Doe</h4>
-                                <span>My Organisation</span>
+                                <h4>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</h4>
+                                <span>{{Auth::user()->roles->pluck('name')[0]}}</span>
                             </div>
                         </div>
                         <div class="ocard-right">
@@ -31,7 +31,7 @@
                     <div class="main-card mt-4">
                         <div class="dashboard-wrap-content">
                             <div class="d-flex flex-wrap justify-content-between align-items-center p-4">
-                                <div
+                                {{--<div
                                     class="dashboard-date-wrap d-flex flex-wrap justify-content-between align-items-center">
                                     <div class="dashboard-date-arrows">
                                         <a href="#" class="before_date"><i class="fa-solid fa-angle-left"></i></a>
@@ -43,8 +43,8 @@
                                         -
                                         <span>30th April, 2022</span>
                                     </h5>
-                                </div>
-                                <div class="rs">
+                                </div>--}}
+                                {{--<div class="rs">
                                     <div class="dropdown dropdown-text event-list-dropdown">
                                         <button class="dropdown-toggle event-list-dropdown" type="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,7 +54,7 @@
                                             <li><a class="dropdown-item" href="#">1</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div>--}}
                             </div>
                             <div class="dashboard-report-content">
                                 <div class="row">
@@ -62,13 +62,13 @@
                                         <div class="dashboard-report-card purple">
                                             <div class="card-content">
                                                 <div class="card-content">
-                                                    <span class="card-title fs-6">Revenue (AUD)</span>
-                                                    <span class="card-sub-title fs-3">$550.00</span>
+                                                    <span class="card-title fs-6">Revenus (FCFA)</span>
+                                                    <span class="card-sub-title fs-3">{{$sum_amount}}</span>
                                                     <div class="d-flex align-items-center">
-                                                        <span><i class="fa-solid fa-arrow-trend-up"></i></span>
+                                                    {{--<span><i class="fa-solid fa-arrow-trend-up"></i></span>
                                                         <span class="text-Light font-12 ms-2 me-2">0.00%</span>
                                                         <span class="font-12 color-body text-nowrap">From Previous
-                                                            Period</span>
+                                                            Period</span>--}}
                                                     </div>
                                                 </div>
                                                 <div class="card-media">
@@ -81,13 +81,13 @@
                                         <div class="dashboard-report-card red">
                                             <div class="card-content">
                                                 <div class="card-content">
-                                                    <span class="card-title fs-6">Orders</span>
-                                                    <span class="card-sub-title fs-3">2</span>
+                                                    <span class="card-title fs-6">Commandes</span>
+                                                    <span class="card-sub-title fs-3">{{$orders}}</span>
                                                     <div class="d-flex align-items-center">
-                                                        <span><i class="fa-solid fa-arrow-trend-up"></i></span>
+                                                    {{--<span><i class="fa-solid fa-arrow-trend-up"></i></span>
                                                         <span class="text-Light font-12 ms-2 me-2">0.00%</span>
                                                         <span class="font-12 color-body text-nowrap">From Previous
-                                                            Period</span>
+                                                            Period</span>--}}
                                                     </div>
                                                 </div>
                                                 <div class="card-media">
@@ -100,13 +100,13 @@
                                         <div class="dashboard-report-card info">
                                             <div class="card-content">
                                                 <div class="card-content">
-                                                    <span class="card-title fs-6">Page Views</span>
+                                                    <span class="card-title fs-6">Evènements Vus</span>
                                                     <span class="card-sub-title fs-3">30</span>
                                                     <div class="d-flex align-items-center">
-                                                        <span><i class="fa-solid fa-arrow-trend-up"></i></span>
+                                                    {{--<span><i class="fa-solid fa-arrow-trend-up"></i></span>
                                                         <span class="text-Light font-12 ms-2 me-2">0.00%</span>
                                                         <span class="font-12 color-body text-nowrap">From Previous
-                                                            Period</span>
+                                                            Period</span>--}}
                                                     </div>
                                                 </div>
                                                 <div class="card-media">
@@ -119,13 +119,13 @@
                                         <div class="dashboard-report-card success">
                                             <div class="card-content">
                                                 <div class="card-content">
-                                                    <span class="card-title fs-6">Ticket Sales</span>
+                                                    <span class="card-title fs-6">Ticket Vendus</span>
                                                     <span class="card-sub-title fs-3">3</span>
                                                     <div class="d-flex align-items-center">
-                                                        <span><i class="fa-solid fa-arrow-trend-up"></i></span>
+                                                    {{--<span><i class="fa-solid fa-arrow-trend-up"></i></span>
                                                         <span class="text-Light font-12 ms-2 me-2">0.00%</span>
                                                         <span class="font-12 color-body text-nowrap">From Previous
-                                                            Period</span>
+                                                            Period</span>--}}
                                                     </div>
                                                 </div>
                                                 <div class="card-media">

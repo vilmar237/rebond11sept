@@ -95,7 +95,7 @@
                         <li class="dropdown account-dropdown">
                             <a href="#" class="account-link" role="button" id="accountClick"
                                 data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{{'/storage/avatars/'.Auth::user()->avatar}}" alt="">
+                                <img src="{{ asset('storage/avatars/'.Auth::user()->avatar)}}" alt="">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
                                 aria-labelledby="accountClick">
